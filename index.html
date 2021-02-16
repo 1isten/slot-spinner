@@ -41,7 +41,7 @@
       display: flex;
     }
 
-    .door {      
+    .door {
       background: #fafafa;
       box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.4) inset;
 
@@ -54,10 +54,8 @@
     }
 
     .boxes {
-      position: relative;
-      /* bottom: 0; */
-
-      transition: bottom 1s ease-in-out;
+      /* transform: translateY(0); */
+      transition: transform 1s ease-in-out;
     }
 
     .box {
@@ -93,29 +91,29 @@
   <div id="app">
     <div class="doors">
       <div class="door">
-        <div class="boxes" onclick="this.style.bottom = '0'">
+        <div class="boxes">
           <!-- <div class="box">?</div> -->
         </div>
       </div>
-
+  
       <div class="door">
-        <div class="boxes" onclick="this.style.bottom = '0'">
+        <div class="boxes">
           <!-- <div class="box">?</div> -->
         </div>
       </div>
-
+  
       <div class="door">
-        <div class="boxes" onclick="this.style.bottom = '0'">
+        <div class="boxes">
           <!-- <div class="box">?</div> -->
         </div>
       </div>
     </div>
-
+  
     <div class="buttons">
       <button id="spinner">Spin</button>
       <button id="reseter">Reset</button>
     </div>
-
+  
     <p class="info"></p>
 
     <script>
@@ -133,8 +131,8 @@
           init(false, 1, 2);
           for (const door of doors) {
             const boxes = door.querySelector('.boxes');
-            const duration = +boxes.style.transitionDuration.replace('s', '');
-            boxes.style.bottom = '0';
+            const duration = parseInt(boxes.style.transitionDuration);
+            boxes.style.transform = 'translateY(0)';
             await new Promise(resolve => setTimeout(resolve, duration * 100));
           }
         }
@@ -182,8 +180,8 @@
               box.textContent = pool[i];
               boxesClone.appendChild(box);
             }
-            boxesClone.style.transitionDuration = (duration > 0 ? duration : 1) + 's';
-            boxesClone.style.bottom = door.clientHeight * (pool.length - 1) + 'px';
+            boxesClone.style.transitionDuration = `${duration > 0 ? duration : 1}s`;
+            boxesClone.style.transform = `translateY(-${door.clientHeight * (pool.length - 1)}px)`;
             door.replaceChild(boxesClone, boxes);
             // console.log(door);
           }
